@@ -1,5 +1,3 @@
-# 
-#    Vulcan Anti-Cheat Configuration File    #
 prefix: '&4&lVulcan &8»'
 alerts:
   format: '%prefix% &f%player% &7failed &f%check% %dev%&7(&fType %type%&7)%dev% &7[&4%vl%&7/&4%max-vl%&7]'
@@ -119,7 +117,6 @@ punishments:
   - '&cVulcan &7has detected &c%player% &7to be cheating and has removed them from
     the network.'
   - '&7&m---»--*-------------------------------------*--«---'
-#Judgement Day options
 judgement-days:
   # The message that wil be broadcast to the server when someone has executed /jday start
   started-broadcast:
@@ -145,7 +142,7 @@ judgement-days:
 freeze:
   # A customizable list of commands that will be executed when a player logs out while frozen
   logged-out-while-frozen-commands: []
-
+  
 join-message:
   enabled: false
   message:
@@ -2660,9 +2657,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
     scaffold:
       a:
         enabled: true
