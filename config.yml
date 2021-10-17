@@ -1,3 +1,5 @@
+# 
+#    Vulcan Anti-Cheat Configuration File    #
 prefix: '&4&lVulcan &8»'
 alerts:
   format: '%prefix% &f%player% &7failed &f%check% %dev%&7(&fType %type%&7)%dev% &7[&4%vl%&7/&4%max-vl%&7]'
@@ -70,7 +72,7 @@ punishment-file:
   enabled: true
 violation-reset:
   enabled: true
-  interval-in-minutes: 8
+  interval-in-minutes: 30
   message-enabled: true
   message: '%prefix% &7Violations for all online players were reset!'
 client-brand-alerts:
@@ -142,7 +144,6 @@ judgement-days:
 freeze:
   # A customizable list of commands that will be executed when a player logs out while frozen
   logged-out-while-frozen-commands: []
-  
 join-message:
   enabled: false
   message:
@@ -1065,7 +1066,7 @@ checks:
         instant-punish-cps: 50
       b:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1081,7 +1082,7 @@ checks:
           decay: 0.1
       c:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1097,7 +1098,7 @@ checks:
           decay: 0.1
       d:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1113,7 +1114,7 @@ checks:
           decay: 0.1
       e:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1129,7 +1130,7 @@ checks:
           decay: 0.1
       f:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1145,7 +1146,7 @@ checks:
           decay: 0.1
       g:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1161,7 +1162,7 @@ checks:
           decay: 0.1
       h:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1177,7 +1178,7 @@ checks:
           decay: 0.1
       i:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1193,7 +1194,7 @@ checks:
           decay: 0.1
       j:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1209,7 +1210,7 @@ checks:
           decay: 0.1
       k:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1225,7 +1226,7 @@ checks:
           decay: 0.1
       l:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1241,7 +1242,7 @@ checks:
           decay: 0.1
       m:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1257,7 +1258,7 @@ checks:
           decay: 0.1
       n:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1273,7 +1274,7 @@ checks:
           decay: 0.1
       o:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1289,7 +1290,7 @@ checks:
           decay: 0.1
       p:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1304,7 +1305,7 @@ checks:
           multiple: 0.57
       q:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1320,7 +1321,7 @@ checks:
           decay: 0.1
       r:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1336,7 +1337,7 @@ checks:
           decay: 0.1
       s:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1352,7 +1353,7 @@ checks:
           decay: 0.1
       t:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
@@ -1383,7 +1384,7 @@ checks:
           max: 1
           multiple: 1
           decay: 0
-        max-reach: 3.03
+        max-reach: 3.035
       b:
         enabled: true
         punishable: true
@@ -1400,7 +1401,7 @@ checks:
           max: 1
           multiple: 1
           decay: 0
-        max-reach: 3.1
+        max-reach: 3.035
     fastbow:
       a:
         enabled: true
@@ -1685,9 +1686,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
       b:
         enabled: true
         punishable: true
@@ -1701,9 +1702,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
       c:
         enabled: true
         punishable: true
@@ -1717,9 +1718,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
   movement:
     noslow:
       a:
@@ -2452,9 +2453,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 5
           multiple: 0.57
-          decay: 0.1
+          decay: 0.2
         ignore-ghost-blocks: true
       b:
         enabled: true
@@ -2471,9 +2472,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 5
           multiple: 0.57
-          decay: 0.1
+          decay: 0.2
       c:
         enabled: true
         punishable: true
@@ -2489,9 +2490,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 5
           multiple: 0.57
-          decay: 0.1
+          decay: 0.2
         ignore-ghost-blocks: true
       d:
         enabled: true
@@ -2508,9 +2509,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 5
           multiple: 0.57
-          decay: 0.1
+          decay: 0.2
         ignore-ghost-blocks: true
       e:
         enabled: true
@@ -2527,9 +2528,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 5
           multiple: 0.57
-          decay: 0.1
+          decay: 0.2
         ignore-ghost-blocks: true
     vclip:
       a:
@@ -2834,32 +2835,32 @@ checks:
         broadcast-punishment: false
         max-violations: 4
         alert-interval: 2
-        dont-alert-until: 3
+        dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.8
         punishment-commands:
-        - 'minecraft:kick %player% Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
+        - jday add %player%
         buffer:
           max: 10
           multiple: 0.57
-          decay: 0.1
+          decay: 0.3
         max-speed: 1.05
       d:
         enabled: true
-        punishable: false
+        punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 4
         alert-interval: 2
-        dont-alert-until: 5
+        dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.8
         punishment-commands:
-        - 'minecraft:kick %player% Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
+        - jday add %player%
         buffer:
           max: 10
           multiple: 0.57
-          decay: 0.1
+          decay: 0.3
         max-balance: 75
     hackedclient:
       a:
@@ -3605,9 +3606,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
       b:
         enabled: true
         punishable: true
@@ -3621,9 +3622,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
       c:
         enabled: true
         punishable: true
@@ -3637,85 +3638,85 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 10
+          max: 2
           multiple: 0.57
-          decay: 0.1
+          decay: 0.05
     improbable:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
         - jday add %player%
-        max-combat-violations: 25
+        max-combat-violations: 4
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
         - jday add %player%
-        max-movement-violations: 30
+        max-movement-violations: 4
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
         - jday add %player%
-        max-player-violations: 30
+        max-player-violations: 4
       d:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
         - jday add %player%
-        max-autoclicker-violations: 30
+        max-autoclicker-violations: 4
       e:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
         - jday add %player%
-        max-total-violations: 50
+        max-total-violations: 4
       f:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
         - jday add %player%
-        max-scaffold-violations: 25
+        max-scaffold-violations: 4
