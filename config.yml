@@ -1886,9 +1886,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       b:
         enabled: true
         punishable: true
@@ -1902,9 +1902,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       c:
         enabled: true
         punishable: true
