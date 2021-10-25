@@ -1918,9 +1918,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
   movement:
     noslow:
       a:
@@ -2870,9 +2870,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
     scaffold:
       a:
         enabled: true
@@ -2979,9 +2979,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       i:
         enabled: true
         punishable: true
