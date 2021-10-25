@@ -2899,9 +2899,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       c:
         enabled: true
         punishable: true
@@ -2915,9 +2915,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       d:
         enabled: true
         punishable: true
@@ -2931,9 +2931,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       e:
         enabled: true
         punishable: true
@@ -2947,9 +2947,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       g:
         enabled: true
         punishable: true
@@ -2963,9 +2963,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
       h:
         enabled: true
         punishable: true
@@ -3019,9 +3019,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
         max-blocks: 6
       m:
         enabled: true
@@ -3036,9 +3036,9 @@ checks:
         punishment-commands:
         - jday add %player%
         buffer:
-          max: 2
+          max: 10
           multiple: 0.57
-          decay: 0.05
+          decay: 0.1
     timer:
       a:
         enabled: true
