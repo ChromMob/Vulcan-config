@@ -4,6 +4,7 @@
 
 # The prefix that will be used for all of the %prefix% messages throughout the plugin
 prefix: '&4&lVulcan &8»'
+
 alerts:
   # This is the chat format that will be followed when a player fails a check.
   # Valid placeholders are %player% (player name), %max-vl% (max violations), %check% (name of check), %description% (check description),
@@ -16,65 +17,78 @@ alerts:
   # This is the hover text that will be displayed when you hover over the alert message in chat.
   # All of the same placeholders as the ones for the format are valid.
   hover-message:
-  - '&7Ping: &c%ping% &8| &7TPS: &c%tps% &8| &7Version: &c%version% &8| &7Client:
-    &c%client-brand%'
-  - ''
-  - '&7Description:'
-  - '&7%description%'
-  - ''
-  - '&7Information:'
-  - '&7%info%'
-  - ''
-  - '&7Click to teleport to &b%player%&7.'
+    - '&7Ping: &c%ping% &8| &7TPS: &c%tps% &8| &7Version: &c%version% &8| &7Client: &c%client-brand%'
+    - ''
+    - '&7Description:'
+    - '&7%description%'
+    - ''
+    - '&7Information:'
+    - '&7%info%'
+    - ''
+    - '&7Click to teleport to &b%player%&7.'
+  # This is the command that will be executed when you click the alert message. Unfortunately we are limited to one
+  # command per ChatComponent so we use a little magic and make our own command that is able to execute a list of any commands.
+  # Valid placeholders
   click-commands:
-  - /vulcan clickalert %player%
+    - '/vulcan clickalert %player%'
+  # The commands that will be run when you use /vulcan clickalert %player% (must be a player parameter)
   click-alert-command-commands:
-  - tp %player%
+    - 'tp %player%'
+  # The message that will be sent when you toggle on alerts. Valid placeholder are %prefix%.
   toggled-on-message: '%prefix% &7Vulcan alerts &aenabled&7!'
+  # The message that will be sent when you toggle off alerts. Valid placeholder are %prefix%.
   toggled-off-message: '%prefix% &7Vulcan alerts &cdisabled&7!'
+  # Whether or not alerts will be printed to the console.
   print-to-console: true
+  # The format for printing alerts to the console
   console-format: '[Vulcan] %player% failed %check% %dev%(Type %type%)%dev% (%vl%/%max-vl%)'
+  # This is a fully customizable list of commands that will be executed each time a player flags a check, just in case
+  # you want to do anything special when they flag without needing to use the API. All valid placeholders are the same
+  # as listed above once again.
   custom-commands: []
+  # You can use this section to color code your alerts or add chances to them depending on the violation level.
   severity:
     violations:
-      '2': 4
-      '3': 8
-      '4': 12
-      '5': 16
-      '6': 16
-      '7': 16
-      '8': 16
-      '9': 16
-      '10': 16
-    colors:
-      '1': '&a'
-      '2': '&e'
-      '3': '&6'
-      '4': '&c'
-      '5': '&4'
-      '6': '&4'
-      '7': '&4'
-      '8': '&4'
-      '9': '&4'
-      '10': '&4'
-  experimental-symbol: '*'
+      2: 4 # Values less than this number will be the color '1' below. Values greater than or equal to this number and less than '3' will be the color 2
+      3: 8 # Values greater than or equal to this number and higher than '2' will be the color '3' below
+      4: 12 # Values greater than or equal to this number and higher than '3' will be the color '4' below
+      5: 16 # Values greater than or equal to this number and higher than '4' will be the color '5' below
+      6: 16 # Values greater than or equal to this number and higher than '5' will be the color '6' below
+      7: 16 # Values greater than or equal to this number and higher than '6' will be the color '7' below
+      8: 16 # Values greater than or equal to this number and higher than '7' will be the color '8' below
+      9: 16 # Values greater than or equal to this number and higher than '8' will be the color '9' below
+      10: 16 # Values greater than or equal to this number and higher than '9' will be the color '10' below
+    colors: # This also supports hex color codes (in 1.16!+)
+      1: '&a' # The color that this severity should be, whatever is less than '2' in the section above
+      2: '&e' # The color that this severity should be, whatever is less than '3' and greater than or equal to '2' in the section above
+      3: '&6' # The color that this severity should be, whatever is less than '4' and greater than or equal to '3' in the section above
+      4: '&c' # The color that this severity should be, whatever is less than '5' and greater than or equal to '4' in the section above
+      5: '&4' # The color that this severity should be, whatever is less than '6' and greater than or equal to '5' in the section above
+      6: '&4' # The color that this severity should be, whatever is less than '7' and greater than or equal to '6' in the section above
+      7: '&4' # The color that this severity should be, whatever is less than '8' and greater than or equal to '7' in the section above
+      8: '&4' # The color that this severity should be, whatever is less than '9' and greater than or equal to '8' in the section above
+      9: '&4' # The color that this severity should be, whatever is less than '10' and greater than or equal to '9' in the section above
+      10: '&4' # The color that this severity should be, whatever is less than '11' and greater than or equal to '10' in the section above
+  # The symbol that will be displayed for the %dev% placeholder to denote experimental checks.
+  experimental-symbol: "*"
+
 verbose:
   # Verbose notifications are sent whenever a player increases the buffer on a check. Only really here for developer
   # purposes as it is very very spammy. All of the same info from above applies here. Not really recommended to be used
   # as it will just completely spam your chat.
   format: '%prefix% &f%player% &7verbosed &f%check% &7(&f%type%&7) %dev% &7[&4%percent%%&7]'
   hover-message:
-  - '&7Ping: &c%ping% &8| &7TPS: &c%tps% &8| &7Version: &c%version%'
-  - ''
-  - '&7Description:'
-  - '&7%description%'
-  - ''
-  - '&7Buffer:'
-  - '&7%buffer%/%max-buffer%'
-  - ''
-  - '&7Click to teleport to &b%player%&7.'
+    - '&7Ping: &c%ping% &8| &7TPS: &c%tps% &8| &7Version: &c%version%'
+    - ''
+    - '&7Description:'
+    - '&7%description%'
+    - ''
+    - '&7Buffer:'
+    - '&7%buffer%/%max-buffer%'
+    - ''
+    - '&7Click to teleport to &b%player%&7.'
   click-commands:
-  - /tp %player%
+    - '/tp %player%'
   toggled-on-message: '%prefix% &7Vulcan verbose &aenabled&7!'
   toggled-off-message: '%prefix% &7Vulcan verbose &cdisabled&7!'
 
@@ -86,10 +100,10 @@ log-file:
   # Valid placeholders are %player% (player name), %max-vl% (max violations), %check% (name of check), %description% (check description),
   # %version% (player's client version), %dev% (* for whether or not the check is experimental), %vl% (violation level),
   # %ping% (the player's ping), %tps% (the server's TPS), and %type% (character denoting the type for the check, A, B, C, etc).
-  alert-message: '%player% failed %check% %dev%(Type %type%)%dev% [VL: %vl%] [Ping:
-    %ping%] [TPS: %tps%] [Version: %version%]'
-  punishment-message: '%player% was punished for %check% %dev%(Type %type%)%dev% [VL:
-    %vl%] [Ping: %ping%] [TPS: %tps%]'
+  alert-message: "%player% failed %check% %dev%(Type %type%)%dev% [VL: %vl%] [Ping: %ping%] [TPS: %tps%] [Version: %version%]"
+  # The message that is logged when a player is punished for a check. Valid placeholders are the same as listed above.
+  # Further details about the punishment will also be logged into the punishments.txt file if enabled (see next section).
+  punishment-message: "%player% was punished for %check% %dev%(Type %type%)%dev% [VL: %vl%] [Ping: %ping%] [TPS: %tps%]"
 
 # This section deals with the punishments.txt file
 punishment-file:
@@ -101,7 +115,7 @@ violation-reset:
   # Whether or not violations should reset automatically
   enabled: true
   # The interval (in minutes) in which violations should automatically be reset.
-  interval-in-minutes: 30
+  interval-in-minutes: 8
   # Whether or not a message will be sent when violations are reset (this is only sent to staff who have /alerts enabled).
   message-enabled: true
   # The message that is sent (only to staff with /alerts enabled) when violations are reset.
@@ -117,7 +131,7 @@ client-brand-alerts:
   # A list of client brands for which alerts will not be sent for. This doesn't have to match exactly, i.e
   # 'lunar' will be able to pick up 'lunarclient', etc.
   ignore-alerts-list:
-  - vanilla
+    - 'vanilla'
   # The message sent when a player joins the server. Valid placeholder are %player (player name), %prefix% (plugin prefix),
   # %client-brand% (the user's client brand), and %client-version% (the user's client version).
   message: '%prefix% &c%player% &7joined using &f%client-brand%&7!'
@@ -135,30 +149,26 @@ client-brand-alerts:
   # The client brands that will be whitelisted This uses string comparison so it doesnt need to be exact, for example,
   # 'forge' will block Forge, 'lunar' will block lunar, etc.
   whitelisted-client-brands: []
+
 connection:
   transaction:
     kick-enabled: true
     max-delay: 45000
     kick-message: 'Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
-    staff-alert-message: '%prefix% &c%player% &7was kicked for not replying to Transaction
-      Packets! &7(&c%delay%ms&7)'
-    console-message: '[Vulcan] &c%player% &7was kicked for not replying to Transaction
-      Packets! &7(&c%delay%ms&7)'
+    staff-alert-message: '%prefix% &c%player% &7was kicked for not replying to Transaction Packets! &7(&c%delay%ms&7)'
+    console-message: '[Vulcan] &c%player% &7was kicked for not replying to Transaction Packets! &7(&c%delay%ms&7)'
   keepalive:
     kick-enabled: true
     max-delay: 45000
     kick-message: 'Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
-    staff-alert-message: '%prefix% &c%player% &7was kicked for not replying to KeepAlive
-      Packets! &7(&c%delay%ms&7)'
-    console-message: '[Vulcan] &c%player% &7was kicked for not replying to KeepAlive
-      Packets! &7(&c%delay%ms&7)'
+    staff-alert-message: '%prefix% &c%player% &7was kicked for not replying to KeepAlive Packets! &7(&c%delay%ms&7)'
+    console-message: '[Vulcan] &c%player% &7was kicked for not replying to KeepAlive Packets! &7(&c%delay%ms&7)'
   max-ping:
     kick-enabled: true
     max-ping: 20000
     max-ticks: 20
     kick-message: 'Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
-    staff-alert-message: '%prefix% &c%player% &7was kicked for having too high ping!
-      &7(&c%ping%ms&7)'
+    staff-alert-message: '%prefix% &c%player% &7was kicked for having too high ping! &7(&c%ping%ms&7)'
     console-message: '[Vulcan] &c%player% &7kicked for having too high ping! &7(&c%ping%ms&7)'
 
 # This section deals with punishment.s
@@ -167,48 +177,50 @@ punishments:
   message: '%prefix% &c%player% &7was punished for &f%check% &7(&fType %type%&7) &7[&4x%vl%&7]'
   # The message that will be broadcast to the whole server when a player is punished
   broadcast:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&cVulcan &7has detected &c%player% &7to be cheating and has removed them from
-    the network.'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cVulcan &7has detected &c%player% &7to be cheating and has removed them from the network."
+    - "&7&m---»--*-------------------------------------*--«---"
 
 #Judgement Day options
 judgement-days:
   # The message that wil be broadcast to the server when someone has executed /jday start
   started-broadcast:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&7The time has come...'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cVulcan Judgement Day v1 has commenced..."
+    - "&7&m---»--*-------------------------------------*--«---"
   # The message that will be broadcast to the server when the judgement day has ended.
   ended-broadcast:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&c%amount% players were punished.'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cThe Judgement Day has ended... %amount% players were punished."
+    - "&7&m---»--*-------------------------------------*--«---"
   # The commands that will be executed, %player% indicates a player who was added to judgement day (/jday add (name)))
   commands:
-  - kick %player% &cUnallowed modifications.
+    - "ban %player% &c[Vulcan] Judgement Day v1"
   # The broadcast that will be sent to the server when someone is punished in a judgement day.
   broadcast:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&c%player% &7was punished.'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - '&7&m---»--*-------------------------------------*--«---'
+    - '&c%player% &7was banned for &c[Vulcan] Judgement Day v1&7.'
+    - '&7&m---»--*-------------------------------------*--«---'
+  # How long we should wait in between players who are queued in judgement days
   cooldown: 1000
-  run-at-interval: true
-  interval: 6000
+  # Whether or not judgement days should run automatically at a specified interval (if the above is true)
+  run-at-interval: false
+  # If the above is true, the interval at which they should run (in ticks, 20 ticks = 1 second. default = 36000 ticks = 30mins)
+  interval: 36000
+
 freeze:
   # A customizable list of commands that will be executed when a player logs out while frozen
   logged-out-while-frozen-commands: []
-  
+
 # Options regarding the join message
 join-message:
   # Whether or not the join message is enabled
   enabled: false
   # The message that will be sent when a player joins the server.
   message:
-  - ''
-  - '&4&lWARNING &cButterfly clicking is strongly discouraged and may result in a
-    ban!'
-  - ''
+    - ''
+    - '&4&lWARNING &cButterfly clicking is strongly discouraged and may result in a ban!'
+    - ''
 
 # Whether or not staff will /alerts enabled will be notified when players get kicked for any of these reasons by
 # Spigot itself (these are just messages, Vulcan is not actually kicking the player for any of these things)
@@ -216,15 +228,14 @@ kick-alert-messages:
   enabled: true
   messages:
     flying-not-enabled: '%prefix% &c%player% &7was kicked for &bFlying is Not Enabled&7!'
-    invalid-move-packet: '%prefix% &c%player% &7was kicked for &bInvalid Movement
-      Packet&7!'
+    invalid-move-packet: '%prefix% &c%player% &7was kicked for &bInvalid Movement Packet&7!'
     too-many-packets: '%prefix% &c%player% &7was kicked for &bToo Many Packets&7!'
 
 # GUI Options.
 gui:
   # Title of the main menu in /vulcan gui. Doesn't support color codes. /vulcan reload won't reload this value
   # since it's only initialized onEnable.
-  title: Vulcan AntiCheat
+  title: 'Vulcan AntiCheat'
 
 # Whether or not ghost block fix should be enabled. Players will be set back and the blocks will be updated.
 ghost-blocks-fix:
@@ -234,8 +245,8 @@ ghost-blocks-fix:
   ghost-water-fix: true
   # Buffer settings
   buffer:
-    max: 10
-    decay: 0.1
+    max: 3
+    decay: .1
   # Whether or not setbacks for ghost blocks should be enabled.
   setback: true
   # Whether or not block change packets should be sent around the bottom of the player reupdating the blocks below them
@@ -249,26 +260,21 @@ ghost-blocks-fix:
   # Whether or not staff should be sent a message when someone is setback for being on a ghost block
   staff-message-enabled: true
   # The message that will be sent to staff when a player's position is updated for being on a ghost block.
-  staff-message: '%prefix% &c%player%''s &7position was updated for being on a ghost
-    block! (%world%, %x%, %y%, %z%) &7[%ticks%]'
+  staff-message: '%prefix% &c%player%''s &7position was updated for being on a ghost block! (%world%, %x%, %y%, %z%) &7[%ticks%]'
   # Whether or not the ghost block message should be printed to console
   print-to-console: true
   # The message that is printed to console if the above is true.
-  console-message: '%player% position was updated for being on a ghost block! (%world%,
-    %x%, %y%, %z%) &7[%ticks%]'
+  console-message: '%player% position was updated for being on a ghost block! (%world%, %x%, %y%, %z%) &7[%ticks%]'
 
 # Message options - these are all pretty self explanatory.
 messages:
   no-permission: '&cYou don''t have permission to execute this command!'
   cant-execute-from-console: '&cYou can''t execute this command from console!'
   ban-command-syntax: '%prefix% &7Proper Syntax: &c/vulcan ban (player)&7.'
-  kb-command-syntax: '%prefix% &7Proper Syntax: &c/vulcan knockback (player) &8| &c/vulcan
-    kb (player)&7.'
+  kb-command-syntax: '%prefix% &7Proper Syntax: &c/vulcan knockback (player) &8| &c/vulcan kb (player)&7.'
   profile-command-syntax: '%prefix% &7Proper Syntax: &c/vulcan profile (player)&7.'
-  jday-command-syntax: '%prefix% &7Proper Syntax: &c/jday add (player) &8| &c/jday
-    execute &8| &c/jday list &8| &c/jday remove (player)&7.'
-  reload-success: '%prefix% &aSuccessfully reloaded Vulcan! (You may have to run this
-    command twice to take effect)'
+  jday-command-syntax: '%prefix% &7Proper Syntax: &c/jday add (player) &8| &c/jday execute &8| &c/jday list &8| &c/jday remove (player)&7.'
+  reload-success: '%prefix% &aSuccessfully reloaded Vulcan! (You may have to run this command twice to take effect)'
   invalid-target: '%prefix% &cThe specified player could not be found!'
   kb-test-success: '%prefix% &aSuccessfully performed knockback test on %player%!'
   jday-no-pending-bans: '%prefix% &cThere are no pending bans!'
@@ -294,33 +300,24 @@ messages:
   must-be-positive: '&cMust be positive!'
   must-be-number: '&cMust be a number!'
   set-max-buffer: '%prefix% &aSet max buffer for %check% to %value%!'
-  set-hotbar-shuffle-minimum-violations: '%prefix% &aSet minimum violations to shuffle
-    hotbar for %check% to %value%!'
-  set-hotbar-shuffle-interval: '%prefix% &aSet hotbar shuffle interval for %check%
-    to %value%!'
-  set-random-rotation-minimum-violations: '%prefix% &aSet minimum violations to randomly
-    rotate for %check% to %value%!'
-  set-random-rotation-interval: '%prefix% &aSet random rotation interval for %check%
-    to %value%!'
+  set-hotbar-shuffle-minimum-violations: '%prefix% &aSet minimum violations to shuffle hotbar for %check% to %value%!'
+  set-hotbar-shuffle-interval: '%prefix% &aSet hotbar shuffle interval for %check% to %value%!'
+  set-random-rotation-minimum-violations: '%prefix% &aSet minimum violations to randomly rotate for %check% to %value%!'
+  set-random-rotation-interval: '%prefix% &aSet random rotation interval for %check% to %value%!'
   set-alert-interval: '%prefix% &aSet alert interval for %check% to %value%!'
   set-buffer-decay: '%prefix% &aSet buffer decay for %check% to %value%!'
   set-buffer-multiple: '%prefix% &aSet buffer multiple for %check% to %value%!'
-  set-max-violations: prefix% &aSet max violations for %check% to %value%!
-  set-minimum-violations-to-alert: '%prefix% &aSet minimum violations to alert for
-    %check% to %value%!'
+  set-max-violations: '%prefix% &aSet max violations for %check% to %value%!'
+  set-minimum-violations-to-alert: '%prefix% &aSet minimum violations to alert for %check% to %value%!'
   set-maximum-ping: '%prefix% &aSet maximum ping for %check% to %value%!'
   set-minimum-tps: '%prefix% &aSet minimum TPS for %check% to %value%!'
   removed-punishment-command: '%prefix% &aRemoved command %command% from check %check%!'
   invalid-index-number: '%prefix% &cInvalid index number!'
   stopped-editing-punishment-commands: '%prefix% &cStopped editing punishment commands!'
-  added-punishment-command: '%prefix% &aAdded punishment command %command% to check
-    %check%!'
-  enter-punishment-command: '%prefix% &aEnter the command you want to add! Type STOP
-    or CANCEL to exit!'
-  remove-punishment-command: '%prefix% &cEnter the index of the command you want to
-    remove. Type STOP or CANCEL to exit!'
-  disable-check-command-syntax: '%prefix% &cProper Syntax: /vulcan disablecheck (check
-    name) - case sensitive.'
+  added-punishment-command: '%prefix% &aAdded punishment command %command% to check %check%!'
+  enter-punishment-command: '%prefix% &aEnter the command you want to add! Type STOP or CANCEL to exit!'
+  remove-punishment-command: '%prefix% &cEnter the index of the command you want to remove. Type STOP or CANCEL to exit!'
+  disable-check-command-syntax: '%prefix% &cProper Syntax: /vulcan disablecheck (check name) - case sensitive.'
   invalid-check: '%prefix% &cInvalid check name! Examples: AimA, BadPacketsF, AutoClickerJ.'
   removed-check: '%prefix% &cDisabled check %check%!'
   violations-command-syntax: '%prefix% &cProper Syntax: /vulcan violations (player)'
@@ -333,7 +330,7 @@ messages:
   no-page: '%prefix% &cThere is no page %page% for %player%!'
   update-available: '%prefix% &7A new update for &cVulcan &7is available! (&cv%new-version%&7)'
   latest-version: '%prefix% &aYou are running the latest version of Vulcan!'
-  injection-failure: You joined too quickly. Please try again!
+  injection-failure: 'You joined too quickly. Please try again!'
   frozen: '&cYou are frozen! Please await instructions from staff.'
   logged-out-while-frozen: '%prefix% &c%player% logged out while frozen!'
   froze: '%prefix% &7You froze &a%player%&7!'
@@ -356,116 +353,114 @@ messages:
 commands:
   # Vulcan help command message.
   help:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&cVulcan Cheat Detection v%version% by &cfrep (frap#0002)'
-  - '&r'
-  - '&c/vulcan help &8- &7Opens this help menu'
-  - '&c/vulcan menu &8| &c/vulcan gui &8- &7Open Vulcan''s GUI'
-  - '&c/vulcan profile &8 - &7Show''s a player''s Vulcan profile.'
-  - '&c/vulcan ban (player) &8- &7Ban a player through Vulcan.'
-  - '&c/vulcan reload &8- &7Reload all files.'
-  - '&c/vulcan disablecheck (check) &8- &7Disables a check (case sensitive).'
-  - '&c/vulcan violations (player) &8- &7Shows all violations of the specified player.'
-  - '&c/vulcan cps (player) &8- &7Displays the CPS of the player.'
-  - '&c/vulcan kb (player) &8 | &c/vulcan knockback (player) &8- &7Applies knockback
-    to a player.'
-  - '&c/vulcan checks &8- &7Shows all enabled checks.'
-  - '&c/vulcan connection (player) &8- &7Shows connection info of the player.'
-  - '&c/vulcan freeze (player) &8- &7Freezes/unfreezes a player.'
-  - '&c/vulcan rotate (player) &8- &7Randomly rotates a player''s yaw/pitch.'
-  - '&c/vulcan shuffle (player) &8- &7Randomly shuffle a player''s hotbar slot.'
-  - '&c/vulcan top &8- &7Display the players with highest violations for each category.'
-  - '&r'
-  - '&c/jday add (name) &8- &7Adds a player to Judgement Day.'
-  - '&c/jday execute &8- &7Executes a Judgement Day.'
-  - ''
-  - '&c/verbose &8- &7Turn on and off verbose notifications.'
-  - '&c/alerts &8- &7Turn on and off cheat alerts.'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cVulcan Cheat Detection v%version% by &cfrep (frap#0002)"
+    - "&r"
+    - "&c/vulcan help &8- &7Opens this help menu"
+    - "&c/vulcan menu &8| &c/vulcan gui &8- &7Open Vulcan's GUI"
+    - "&c/vulcan profile &8 - &7Show's a player's Vulcan profile."
+    - "&c/vulcan ban (player) &8- &7Ban a player through Vulcan."
+    - "&c/vulcan reload &8- &7Reload all files."
+    - "&c/vulcan disablecheck (check) &8- &7Disables a check (case sensitive)."
+    - "&c/vulcan violations (player) &8- &7Shows all violations of the specified player."
+    - "&c/vulcan cps (player) &8- &7Displays the CPS of the player."
+    - "&c/vulcan kb (player) &8 | &c/vulcan knockback (player) &8- &7Applies knockback to a player."
+    - "&c/vulcan checks &8- &7Shows all enabled checks."
+    - "&c/vulcan connection (player) &8- &7Shows connection info of the player."
+    - "&c/vulcan freeze (player) &8- &7Freezes/unfreezes a player."
+    - "&c/vulcan rotate (player) &8- &7Randomly rotates a player's yaw/pitch."
+    - "&c/vulcan shuffle (player) &8- &7Randomly shuffle a player's hotbar slot."
+    - "&c/vulcan top &8- &7Display the players with highest violations for each category."
+    - "&r"
+    - "&c/jday add (name) &8- &7Adds a player to Judgement Day."
+    - "&c/jday execute &8- &7Executes a Judgement Day."
+    - ""
+    - "&c/verbose &8- &7Turn on and off verbose notifications."
+    - "&c/alerts &8- &7Turn on and off cheat alerts."
+    - "&7&m---»--*-------------------------------------*--«---"
   ban:
     # The commands that will be executed when /vulcan ban (player) is executed
     commands:
-    - ban %player% &c[Vulcan] Unfair Advantage
+      - 'ban %player% &c[Vulcan] Unfair Advantage'
     # The messages that will be broadcast when /vulcan ban (player) is executed
     broadcast:
-    - '&7&m---»--*-------------------------------------*--«---'
-    - '&cVulcan &7has detected &c%player% &7to be cheating and has removed them from
-      the network.'
-    - '&7&m---»--*-------------------------------------*--«---'
+      - "&7&m---»--*-------------------------------------*--«---"
+      - "&cVulcan &7has detected &c%player% &7to be cheating and has removed them from the network."
+      - "&7&m---»--*-------------------------------------*--«---"
   # Options for the /vulcan profile (name) command
   profile:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&cVulcan Profile for %player%:'
-  - ' &8» &7%uuid%'
-  - ''
-  - '&7Version: &c%client-version%'
-  - '&7Client Brand: &c%client-brand%'
-  - '&7Sensitivity: &c%sensitivity%%'
-  - '&7Last CPS: &c%cps% CPS'
-  - ''
-  - '&7Total Violations (&c%total-violations%&7):'
-  - ' &8» &7Combat: &c%combat-violations%'
-  - ' &8» &7Movement: &c%movement-violations%'
-  - ' &8» &7Player: &c%player-violations%'
-  - ''
-  - '&7Collisions:'
-  - '&8» &7Nearby Blocks: %nearby-blocks%'
-  - '&8» &7Nearby Entities: %nearby-entities%'
-  - ''
-  - '&7Potion Effects: %potion-effects%'
-  - '&7&m---»--*-------------------------------------*--«---'
-  cps: '%prefix% &7CPS for &c%player%&7: &c%cps%'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cVulcan Profile for %player%:"
+    - " &8» &7%uuid%"
+    - ""
+    - "&7Version: &c%client-version%"
+    - "&7Client Brand: &c%client-brand%"
+    - "&7Sensitivity: &c%sensitivity%%"
+    - "&7Last CPS: &c%cps% CPS"
+    - ""
+    - "&7Total Violations (&c%total-violations%&7):"
+    - " &8» &7Combat: &c%combat-violations%"
+    - " &8» &7Movement: &c%movement-violations%"
+    - " &8» &7Player: &c%player-violations%"
+    - ""
+    - "&7Collisions:"
+    - "&8» &7Nearby Blocks: %nearby-blocks%"
+    - "&8» &7Nearby Entities: %nearby-entities%"
+    - ""
+    - "&7Potion Effects: %potion-effects%"
+    - "&7&m---»--*-------------------------------------*--«---"
+  cps: "%prefix% &7CPS for &c%player%&7: &c%cps%"
   connection:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&cConnection Information for %player%:'
-  - ''
-  - '&7Transaction Ping: &c%transaction-ping%ms'
-  - '&7KeepAlive Ping: &c%keepalive-ping%ms'
-  - ''
-  - '&7Last Replied Transaction: &c%last-replied-transaction%ms ago'
-  - '&7Queued Transactions: &c%queued-transactions%'
-  - ''
-  - '&7Flying Delay: &c%flying-delay%ms'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cConnection Information for %player%:"
+    - ""
+    - "&7Transaction Ping: &c%transaction-ping%ms"
+    - "&7KeepAlive Ping: &c%keepalive-ping%ms"
+    - ""
+    - "&7Last Replied Transaction: &c%last-replied-transaction%ms ago"
+    - "&7Queued Transactions: &c%queued-transactions%"
+    - ""
+    - "&7Flying Delay: &c%flying-delay%ms"
+    - "&7&m---»--*-------------------------------------*--«---"
   logs:
     color: '&7'
-    header-footer: '&7&m---»--*--&r&7[ Logs for &c%player% &7(&c%page%&8/&c%max-pages%&7)
-      &7]&7&m--*--«---'
+    header-footer: '&7&m---»--*--&r&7[ Logs for &c%player% &7(&c%page%&8/&c%max-pages%&7) &7]&7&m--*--«---'
   top:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&cTop Total Violations:'
-  - ' &8- &7%total-1-name% &7(&c%total-1-violations% VL&7)'
-  - ' &8- &7%total-2-name% &7(&c%total-2-violations% VL&7)'
-  - ' &8- &7%total-3-name% &7(&c%total-3-violations% VL&7)'
-  - ' &8- &7%total-4-name% &7(&c%total-4-violations% VL&7)'
-  - ' &8- &7%total-5-name% &7(&c%total-5-violations% VL&7)'
-  - ''
-  - '&cTop Combat Violations:'
-  - ' &8- &7%combat-1-name% &7(&c%combat-1-violations% VL&7)'
-  - ' &8- &7%combat-2-name% &7(&c%combat-2-violations% VL&7)'
-  - ' &8- &7%combat-3-name% &7(&c%combat-3-violations% VL&7)'
-  - ' &8- &7%combat-4-name% &7(&c%combat-4-violations% VL&7)'
-  - ' &8- &7%combat-5-name% &7(&c%combat-5-violations% VL&7)'
-  - ''
-  - '&cTop Movement Violations:'
-  - ' &8- &7%movement-1-name% &7(&c%movement-1-violations% VL&7)'
-  - ' &8- &7%movement-2-name% &7(&c%movement-2-violations% VL&7)'
-  - ' &8- &7%movement-3-name% &7(&c%movement-3-violations% VL&7)'
-  - ' &8- &7%movement-4-name% &7(&c%movement-4-violations% VL&7)'
-  - ' &8- &7%movement-5-name% &7(&c%movement-5-violations% VL&7)'
-  - ''
-  - '&cTop Player Violations:'
-  - ' &8- &7%player-1-name% &7(&c%player-1-violations% VL&7)'
-  - ' &8- &7%player-2-name% &7(&c%player-2-violations% VL&7)'
-  - ' &8- &7%player-3-name% &7(&c%player-3-violations% VL&7)'
-  - ' &8- &7%player-4-name% &7(&c%player-4-violations% VL&7)'
-  - ' &8- &7%player-5-name% &7(&c%player-5-violations% VL&7)'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - "&7&m---»--*-------------------------------------*--«---"
+    - "&cTop Total Violations:"
+    - " &8- &7%total-1-name% &7(&c%total-1-violations% VL&7)"
+    - " &8- &7%total-2-name% &7(&c%total-2-violations% VL&7)"
+    - " &8- &7%total-3-name% &7(&c%total-3-violations% VL&7)"
+    - " &8- &7%total-4-name% &7(&c%total-4-violations% VL&7)"
+    - " &8- &7%total-5-name% &7(&c%total-5-violations% VL&7)"
+    - ""
+    - "&cTop Combat Violations:"
+    - " &8- &7%combat-1-name% &7(&c%combat-1-violations% VL&7)"
+    - " &8- &7%combat-2-name% &7(&c%combat-2-violations% VL&7)"
+    - " &8- &7%combat-3-name% &7(&c%combat-3-violations% VL&7)"
+    - " &8- &7%combat-4-name% &7(&c%combat-4-violations% VL&7)"
+    - " &8- &7%combat-5-name% &7(&c%combat-5-violations% VL&7)"
+    - ""
+    - "&cTop Movement Violations:"
+    - " &8- &7%movement-1-name% &7(&c%movement-1-violations% VL&7)"
+    - " &8- &7%movement-2-name% &7(&c%movement-2-violations% VL&7)"
+    - " &8- &7%movement-3-name% &7(&c%movement-3-violations% VL&7)"
+    - " &8- &7%movement-4-name% &7(&c%movement-4-violations% VL&7)"
+    - " &8- &7%movement-5-name% &7(&c%movement-5-violations% VL&7)"
+    - ""
+    - "&cTop Player Violations:"
+    - " &8- &7%player-1-name% &7(&c%player-1-violations% VL&7)"
+    - " &8- &7%player-2-name% &7(&c%player-2-violations% VL&7)"
+    - " &8- &7%player-3-name% &7(&c%player-3-violations% VL&7)"
+    - " &8- &7%player-4-name% &7(&c%player-4-violations% VL&7)"
+    - " &8- &7%player-5-name% &7(&c%player-5-violations% VL&7)"
+    - "&7&m---»--*-------------------------------------*--«---"
   jday:
-    list-header-footer: '&7&m---»--*-------------------------------------*--«---'
-    list-format: ' &8- &7%name%'
+    list-header-footer: "&7&m---»--*-------------------------------------*--«---"
+    list-format: " &8- &7%name%"
   punishlogs:
     header-footer: '&7&m---»--*--&r&7[ Punishment Logs for &c%player% &7]&7&m--*--«---'
+
 punishment-statistics-broadcast:
   # Whether or not Vulcan should broadcast how many players it has punished.
   enabled: false
@@ -473,9 +468,9 @@ punishment-statistics-broadcast:
   interval: 18000
   # The message that should be broadcasted
   broadcast:
-  - '&7&m---»--*-------------------------------------*--«---'
-  - '&7In the past 7 days, &cVulcan &7has punished &c%amount% &7players.'
-  - '&7&m---»--*-------------------------------------*--«---'
+    - '&7&m---»--*-------------------------------------*--«---'
+    - '&7In the past 7 days, &cVulcan &7has punished &c%amount% &7players.'
+    - '&7&m---»--*-------------------------------------*--«---'
 
 # Some simple settings
 settings:
@@ -502,7 +497,7 @@ settings:
   # This is the max file size (in KB) before the violations.txt should be zipped and put into the logs folder
   max-logs-file-size: 7500
   # If you have a bungee network and want to have a specific server name for punishment/alert messages, etc
-  server-name: Default
+  server-name: 'Default'
   # Whether or not alert messages should be sent on the main thread or asynchronously. If your server is on bungee, it is recommended to keep this
   # disabled as sending large chat component messages with so much info (hover, click commands, etc) like the alert commands can
   # sometimes cause people to be kicked for 'The server you were on has went down' or something.
@@ -533,13 +528,13 @@ settings:
   # Whether or not we should ignore flags for players whose usernames start with a certain character/string of characters
   ignore-geyser-prefixes: true
   # The string to be ignored - all players names who start with a * will not be flagged (case sensitive if not symbols)
-  ignore-geyser-prefix: '*'
+  ignore-geyser-prefix: "*"
   # The max violation (violations above this won't be sent)
   max-alert-violation: 250
   # How long should people be exempt from checks when they were in /fly (default = 40 ticks, 2 seconds)
   flight-cooldown: 40
   # What the /vulcan top command should display if there aren't enough users for it to sort
-  top-command-unresolved: Unresolved
+  top-command-unresolved: "Unresolved"
   # Whether or not players who are in the judgement day queue should be able to be banned again.
   ignore-if-in-judgement-day: false
   # Whether or not players who join with Vivecraft should be ignored. Be careful with this as it can be spoofed.
@@ -563,6 +558,11 @@ settings:
   # The amount greater than the max violations that should be ignored (example, 3 would mean that if the max violations
   # was set to 10, alerts greater than VL 13 would be ignored)
   ignore-alerts-over-max-violations-amount: 3
+  # Whether or not Vulcan should warn you if you may be using an incompatible spigot fork.
+  incompatability-manager: true
+  # Whether or not Vulcan should send plugin messages
+  plugin-messaging: true
+
 hooks:
   ######################################################################################################################
   # Discord Configuration                                                                                              #
@@ -571,40 +571,40 @@ hooks:
   ######################################################################################################################
   discord:
     enable-hook: false
-    alerts-channel-id: channel_id_here
-    punishment-channel-id: channel_id_here
+    alerts-channel-id: 'channel_id_here'
+    punishment-channel-id: 'channel_id_here'
     command-prefix: '!vulcan'
     alerts-format:
-      color: ORANGE
-      title: Vulcan Alert
+      color: 'ORANGE'
+      title: 'Vulcan Alert'
       description: '%player% failed %check% (Type: %type%) (VL:%vl%)'
-      image: https://crafatar.com/avatars/%uuid%
+      image: 'https://crafatar.com/avatars/%uuid%'
       content:
-      - Info|%info%|false
-      - Location|%world% - X:%x%, Y:%y%, Z:%z%|false
-      - Client Version|%client-version%|false
-      - Client Brand|%client-brand%|false
-      - Client Ping|%ping%|false
-      - Server TPS|%tps%|false
+        - 'Info|%info%|false'
+        - 'Location|%world% - X:%x%, Y:%y%, Z:%z%|false'
+        - 'Client Version|%client-version%|false'
+        - 'Client Brand|%client-brand%|false'
+        - 'Client Ping|%ping%|false'
+        - 'Server TPS|%tps%|false'
     punishment-format:
-      color: RED
-      title: Vulcan Punishment
+      color: 'RED'
+      title: 'Vulcan Punishment'
       description: '%player% was banned for  %check% (Type: %type%) (VL:%vl%)'
-      image: https://crafatar.com/avatars/%uuid%
+      image: 'https://crafatar.com/avatars/%uuid%'
   ######################################################################################################################
   # Discord Webhook Configuration                                                                                      #
   ######################################################################################################################
 discord-webhook:
   alerts:
     enabled: false
-    url: insert-webhook-url-here
-    avatar: https://i.imgur.com/JPG1Kwk.png
-    thumbnail: http://cravatar.eu/avatar/%name%/64.png
+    url: 'insert-webhook-url-here'
+    avatar: 'https://i.imgur.com/JPG1Kwk.png'
+    thumbnail: 'http://cravatar.eu/avatar/%name%/64.png'
     color-r: 252
     color-g: 140
     color-b: 3
-    username: Vulcan
-    title: Vulcan Alert
+    username: 'Vulcan'
+    title: 'Vulcan Alert'
     description: '**%player%** failed %check% %dev%(Type %type%)%dev% [%vl%/%max-vl%]'
     content: ''
     information-field: false
@@ -616,14 +616,14 @@ discord-webhook:
     ping-tps-field: true
   punishments:
     enabled: false
-    url: insert-webhook-url-here
-    avatar: https://i.imgur.com/JPG1Kwk.png
-    thumbnail: http://cravatar.eu/avatar/%name%/64.png
+    url: 'insert-webhook-url-here'
+    avatar: 'https://i.imgur.com/JPG1Kwk.png'
+    thumbnail: 'http://cravatar.eu/avatar/%name%/64.png'
     color-r: 255
     color-g: 0
     color-b: 0
-    username: Vulcan
-    title: Vulcan Punishment
+    username: 'Vulcan'
+    title: 'Vulcan Punishment'
     description: '**%player%** was punished for %check% (Type %type%) [VL: %vl%]'
     content: ''
     description-field: false
@@ -685,17 +685,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .75
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -709,17 +709,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 8
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.2
+          max: 6
+          multiple: .5
+          decay: .65
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -733,17 +733,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .75
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -757,17 +757,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .5
+          decay: .75
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -781,17 +781,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .75
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -805,17 +805,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 6
-          multiple: 0.3
-          decay: 0.35
+          max: 12
+          multiple: .5
+          decay: .45
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -829,17 +829,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .5
+          decay: .75
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -853,17 +853,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 7
+          multiple: .5
+          decay: .75
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -877,17 +877,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 7
+          multiple: .5
+          decay: .75
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -901,17 +901,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .5
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -925,17 +925,16 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 4
-          multiple: 0.57
-          decay: 0.05
+          max: 10
+          multiple: .45
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -949,17 +948,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .4
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -973,17 +972,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -997,17 +996,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1021,17 +1020,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .4
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1045,17 +1044,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.05
+          max: 6
+          multiple: .5
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1069,17 +1068,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 20
+          multiple: .3
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1093,17 +1092,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 20
+          multiple: .25
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1117,13 +1116,13 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1137,17 +1136,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 20
+          multiple: .25
+          decay: .125
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1161,17 +1160,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 12
+          multiple: .25
+          decay: .125
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1186,13 +1185,13 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1206,13 +1205,13 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1226,17 +1225,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .5
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1259,14 +1258,11 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        # Don't set this below 22ish
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         max-cps: 25
-        # Set this to 100000 or something really high to disable this
-        instant-punish-cps: 50
       b:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1275,14 +1271,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 3
-          multiple: 0.5
-          decay: 0.5
+          multiple: .5
+          decay: .5
       c:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1291,14 +1287,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 3
-          multiple: 0.5
+          multiple: .5
           decay: 1
       d:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1307,14 +1303,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 3
-          multiple: 0.5
-          decay: 0.5
+          multiple: .5
+          decay: .5
       e:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1323,14 +1319,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 3
-          multiple: 0.5
-          decay: 0.75
+          multiple: .5
+          decay: .75
       f:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1339,14 +1335,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 4
-          multiple: 0.5
+          multiple: .5
           decay: 1.25
       g:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1355,14 +1351,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 5
-          multiple: 0.25
+          multiple: .25
           decay: 1.25
       h:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1371,14 +1367,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 4
-          multiple: 0.5
+          multiple: .5
           decay: 1
       i:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1387,14 +1383,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 5
-          multiple: 0.5
+          multiple: .5
           decay: 1.25
       j:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1403,14 +1399,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 4
-          multiple: 0.5
+          multiple: .5
           decay: 1.25
       k:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1419,14 +1415,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 4
-          multiple: 0.5
-          decay: 0.75
+          multiple: .5
+          decay: .75
       l:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1435,14 +1431,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 4
-          multiple: 0.25
+          multiple: .25
           decay: 1
       m:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1451,14 +1447,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 4
-          multiple: 0.25
-          decay: 0.75
+          multiple: .25
+          decay: .75
       n:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1467,14 +1463,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 25
-          multiple: 0.15
-          decay: 0.75
+          multiple: .15
+          decay: .75
       o:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1483,14 +1479,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 5
-          multiple: 0.25
+          multiple: .25
           decay: 1.25
       p:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1499,13 +1495,13 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 2
-          multiple: 0.25
+          multiple: .25
       q:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1514,14 +1510,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 35
-          multiple: 0.3
+          multiple: .3
           decay: 2.0
       r:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1530,14 +1526,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 50
-          multiple: 0.15
+          multiple: .15
           decay: 10
       s:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1546,14 +1542,14 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 30
-          multiple: 0.15
-          decay: 0.825
+          multiple: .15
+          decay: .825
       t:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
         max-violations: 25
@@ -1562,63 +1558,63 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 25
-          multiple: 0.15
-          decay: 0.75
+          multiple: .15
+          decay: .75
     reach:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 8
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-        max-reach: 3.035
+          max: 3
+          multiple: .25
+          decay: .035
+        max-reach: 3.03
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-        max-reach: 3.035
+          max: 6
+          multiple: .25
+          decay: .225
+        max-reach: 3.15
     fastbow:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .125
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1633,17 +1629,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .05
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1657,17 +1653,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .05
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1688,11 +1684,11 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1712,11 +1708,11 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .6
+          decay: .5
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1736,11 +1732,11 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .5
+          decay: .25
         hotbar-shuffle:
           enabled: false
           minimum-vl-to-shuffle: 2
@@ -1754,13 +1750,13 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 2
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       f:
         enabled: true
         punishable: true
@@ -1772,27 +1768,27 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 10
-          multiple: 0.57
-          decay: 0.1
+          multiple: .25
+          decay: 2
       g:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .05
       h:
         enabled: true
         punishable: true
@@ -1804,73 +1800,73 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       j:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .5
       k:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 1
-          multiple: 1
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .75
     hitbox:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-        max-angle: 0.42
+          max: 4
+          multiple: .25
+          decay: .125
+        max-angle: .42
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .25
+          decay: .125
         max-angle: 45
     velocity:
       a:
@@ -1878,49 +1874,49 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .25
+          decay: .075
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .35
+          decay: .125
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .25
+          decay: .175
   movement:
     noslow:
       a:
@@ -1928,81 +1924,81 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .15
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 7
+          multiple: .25
+          decay: .075
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 7
+          multiple: .25
+          decay: .15
       d:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 7
+          multiple: .25
+          decay: .15
       e:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 7
+          multiple: .25
+          decay: .15
     motion:
       a:
         enabled: true
@@ -2011,17 +2007,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .25
       b:
         enabled: true
         punishable: true
@@ -2029,17 +2025,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .25
       c:
         enabled: true
         punishable: true
@@ -2047,17 +2043,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .05
       d:
         enabled: true
         punishable: true
@@ -2065,17 +2061,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .05
       e:
         enabled: true
         punishable: true
@@ -2083,17 +2079,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .05
       g:
         enabled: true
         punishable: true
@@ -2101,17 +2097,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .15
     jump:
       a:
         enabled: true
@@ -2120,17 +2116,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 25
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .15
       b:
         enabled: true
         punishable: true
@@ -2138,17 +2134,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 25
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .15
     step:
       a:
         enabled: true
@@ -2156,81 +2152,81 @@ checks:
         setback: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       b:
         enabled: true
         punishable: true
         setback: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .25
+          decay: .35
     boatfly:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .33
+          decay: .125
         kick-out: false
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .25
+          decay: .25
         kick-out: false
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .25
+          decay: .125
         kick-out: false
     entityflight:
       a:
@@ -2238,85 +2234,85 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .25
         kick-out: false
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .25
     antilevitation:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .25
+          decay: .075
     nosaddle:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .5
+          decay: .125
     entityspeed:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .25
         kick-out: false
     elytra:
       a:
@@ -2324,114 +2320,114 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .25
         max-speed: 4.25
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .25
+          decay: .125
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .5
+          decay: .125
       f:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .25
+          decay: .125
       g:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 25
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .1
       i:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .25
+          decay: .1
       k:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .25
+          decay: .1
     speed:
       a:
         enabled: true
@@ -2440,17 +2436,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 12
         alert-interval: 1
         dont-alert-until: 2
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .35
+          decay: .125
       b:
         enabled: true
         punishable: true
@@ -2458,18 +2454,18 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 2
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-        min-difference: 0.0025
+          max: 3
+          multiple: .25
+          decay: .045
+        min-difference: .0025
       c:
         enabled: true
         punishable: true
@@ -2477,18 +2473,18 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
         dont-alert-until: 2
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-        min-difference: 0.001
+          max: 3
+          multiple: .25
+          decay: .045
+        min-difference: .001
       d:
         enabled: true
         punishable: true
@@ -2496,18 +2492,18 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 2
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-        min-difference: 0.0025
+          max: 3
+          multiple: .25
+          decay: .045
+        min-difference: .0025
     fastclimb:
       a:
         enabled: true
@@ -2516,17 +2512,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .5
+          decay: .125
     wallclimb:
       a:
         enabled: true
@@ -2535,17 +2531,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .35
+          decay: .225
     jesus:
       a:
         enabled: true
@@ -2554,17 +2550,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .025
       b:
         enabled: true
         punishable: true
@@ -2572,17 +2568,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .5
+          decay: .175
       c:
         enabled: true
         punishable: true
@@ -2590,17 +2586,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 10
-          multiple: 0.57
-          decay: 0.1
+          multiple: .45
+          decay: .75
       d:
         enabled: true
         punishable: true
@@ -2608,17 +2604,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .45
+          decay: .175
       e:
         enabled: true
         punishable: true
@@ -2626,17 +2622,17 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
           max: 10
-          multiple: 0.57
-          decay: 0.1
+          multiple: .25
+          decay: .175
     flight:
       a:
         enabled: true
@@ -2645,17 +2641,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 30
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 5
-          multiple: 0.57
-          decay: 0.2
+          max: 3
+          multiple: .65
+          decay: .275
         # Whether or not this check should be disabled for suspected ghost blocks - enabling this will make these checks prone
         # to be bypasses by certain fly modules which spoof onGround values as if the player were on a ghost block, so if you enable
         # this make sure to enable setbacks for ghost-blocks in the ghost-blocks-fix section.
@@ -2667,17 +2663,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 30
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 5
-          multiple: 0.57
-          decay: 0.2
+          max: 3
+          multiple: .5
+          decay: .275
       c:
         enabled: true
         punishable: true
@@ -2685,17 +2681,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 30
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 5
-          multiple: 0.57
-          decay: 0.2
+          max: 4
+          multiple: .75
+          decay: .225
         # Whether or not this check should be disabled for suspected ghost blocks - enabling this will make these checks prone
         # to be bypasses by certain fly modules which spoof onGround values as if the player were on a ghost block, so if you enable
         # this make sure to enable setbacks for ghost-blocks in the ghost-blocks-fix section.
@@ -2707,17 +2703,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 30
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 5
-          multiple: 0.57
-          decay: 0.2
+          max: 4
+          multiple: .35
+          decay: .275
         # Whether or not this check should be disabled for suspected ghost blocks - enabling this will make these checks prone
         # to be bypasses by certain fly modules which spoof onGround values as if the player were on a ghost block, so if you enable
         # this make sure to enable setbacks for ghost-blocks in the ghost-blocks-fix section.
@@ -2729,17 +2725,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 30
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 5
-          multiple: 0.57
-          decay: 0.2
+          max: 3
+          multiple: .4
+          decay: .5
         # Whether or not this check should be disabled for suspected ghost blocks - enabling this will make these checks prone
         # to be bypasses by certain fly modules which spoof onGround values as if the player were on a ghost block, so if you enable
         # this make sure to enable setbacks for ghost-blocks in the ghost-blocks-fix section.
@@ -2747,34 +2743,34 @@ checks:
     vclip:
       a:
         enabled: true
-        punishable: true
+        punishable: false
         setback: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
     sprint:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .25
+          decay: .4
     strafe:
       a:
         enabled: true
@@ -2783,33 +2779,33 @@ checks:
         min-vl-to-setback: 1
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .5
+          decay: .05
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .15
+          decay: .075
   player:
     fastuse:
       a:
@@ -2817,26 +2813,26 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
     fastplace:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         max-blocks: 15
     fastbreak:
       a:
@@ -2844,17 +2840,17 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .5
         min-difference: -125
     tower:
       a:
@@ -2862,356 +2858,359 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .5
+          decay: .75
     scaffold:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .25
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .5
       d:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .25
+          decay: .5
       e:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .25
+          decay: .5
       g:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .25
       h:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .25
+          decay: .35
       i:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       j:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       k:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .35
         max-blocks: 6
       m:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 12
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .25
     timer:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 2
-        dont-alert-until: 1
+        dont-alert-until: 3
         maximum-ping: 100000
         minimum-tps: 19.8
         punishment-commands:
-        - jday add %player%
+          - 'minecraft:kick %player% Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.3
+          max: 35
+          multiple: .425
+          decay: 1.85
         max-speed: 1.05
       d:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 30
         alert-interval: 2
-        dont-alert-until: 1
+        dont-alert-until: 5
         maximum-ping: 100000
         minimum-tps: 19.8
         punishment-commands:
-        - jday add %player%
+          - 'minecraft:kick %player% Internal Exception: io.netty.handler.timeout.ReadTimeoutException'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.3
+          max: 3
+          multiple: .5
+          decay: .25
         max-balance: 75
     hackedclient:
       a:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1000
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       b:
         enabled: true
-        punishable: true
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1000
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
     baritone:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 20
+          multiple: .5
+          decay: .25
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .5
+          decay: .05
     crash:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .25
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       d:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
     ghosthand:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         cancel: true
+    # This checks for when players do not reply to transaction packets. Recommended to just kick for this on 1 violation, since
+    # anyone who flags this will be automatically kicked by the server for keepalive timeout anyway if they don't reply to any
+    # packets after 30 seconds.
     transaction:
       a:
-        enabled: true
-        punishable: true
+        enabled: false
+        punishable: false
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         max-delay: 30000
     selfleash:
       a:
@@ -3219,448 +3218,448 @@ checks:
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .5
+          decay: .25
     badpackets:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .5
+          decay: .25
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       d:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .25
+          decay: .01
       e:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       f:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       g:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       h:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       i:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       j:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       k:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .4
       m:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 5
+          multiple: .33
+          decay: .25
       n:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 20
+          multiple: .25
+          decay: 2.5
       o:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .15
       p:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .15
       q:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .15
       r:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .5
+          decay: .25
       s:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       t:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       u:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       v:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .5
+          decay: .075
         kick-out: false
       w:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .5
+          decay: .75
       x:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 6
+          multiple: .5
+          decay: .35
       y:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 1
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
       z:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 3
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - kick %player% &cBoat Glitch Detected
-      '1':
+          - 'kick %player% &cBoat Glitch Detected'
+      1:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-      '2':
+          max: 12
+          multiple: .25
+          decay: .25
+      2:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
-      '4':
+          max: 12
+          multiple: .25
+          decay: .25
+      4:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 4
+          multiple: .25
+          decay: .025
     inventory:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .25
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .25
+          decay: .25
     invalid:
       c:
         enabled: true
@@ -3669,33 +3668,33 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 8
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .01
       d:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 10
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 8
+          multiple: .25
+          decay: .5
       e:
         enabled: true
         punishable: true
@@ -3703,17 +3702,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 8
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .01
       f:
         enabled: true
         punishable: true
@@ -3721,17 +3720,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .01
       g:
         enabled: true
         punishable: true
@@ -3739,17 +3738,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 2
+          multiple: .5
+          decay: .025
       h:
         enabled: true
         punishable: true
@@ -3757,17 +3756,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .05
       i:
         enabled: true
         punishable: true
@@ -3775,17 +3774,17 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 3
+          multiple: .5
+          decay: .05
       j:
         enabled: true
         punishable: true
@@ -3793,66 +3792,66 @@ checks:
         setback: false
         min-vl-to-setback: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 20
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 10
-          multiple: 0.57
-          decay: 0.1
+          max: 1
+          multiple: .5
+          decay: .05
     groundspoof:
       a:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 2
-          multiple: 0.57
-          decay: 0.05
+          max: 4
+          multiple: .5
+          decay: .125
       b:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 5
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 2
-          multiple: 0.57
-          decay: 0.05
+          max: 4
+          multiple: .5
+          decay: .125
       c:
         enabled: true
         punishable: true
         discord-alert-interval: 1
         broadcast-punishment: false
-        max-violations: 4
+        max-violations: 15
         alert-interval: 1
         dont-alert-until: 1
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
         buffer:
-          max: 2
-          multiple: 0.57
-          decay: 0.05
+          max: 4
+          multiple: .5
+          decay: .125
     improbable:
       a:
         enabled: true
@@ -3865,8 +3864,8 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        max-combat-violations: 4
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
+        max-combat-violations: 25
       b:
         enabled: true
         punishable: true
@@ -3878,8 +3877,8 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        max-movement-violations: 4
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
+        max-movement-violations: 30
       c:
         enabled: true
         punishable: true
@@ -3891,8 +3890,8 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        max-player-violations: 4
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
+        max-player-violations: 30
       d:
         enabled: true
         punishable: true
@@ -3904,8 +3903,8 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        max-autoclicker-violations: 4
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
+        max-autoclicker-violations: 30
       e:
         enabled: true
         punishable: true
@@ -3917,8 +3916,8 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        max-total-violations: 4
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
+        max-total-violations: 50
       f:
         enabled: true
         punishable: true
@@ -3930,5 +3929,5 @@ checks:
         maximum-ping: 100000
         minimum-tps: 19.0
         punishment-commands:
-        - jday add %player%
-        max-scaffold-violations: 4
+          - 'kick %player% &c[Vulcan] Unfair Advantage'
+        max-scaffold-violations: 25
